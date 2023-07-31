@@ -6,16 +6,17 @@ import {
   Param,
   Delete,
   Put,
-  ParseUUIDPipe,
   HttpCode,
   HttpStatus,
   Query,
+  ParseUUIDPipe,
   ParseIntPipe,
 } from '@nestjs/common';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { ActiveUserId } from 'src/shared/decorators/ActiveUserId';
 import { TransactionsService } from './services/transactions.service';
+import { OptionalParseUUIDPipe } from 'src/shared/pipes/OptionalParseUUIDPipe';
 
 @Controller('transactions')
 export class TransactionsController {
@@ -34,7 +35,10 @@ export class TransactionsController {
     @ActiveUserId() userId: string,
     @Query('month', ParseIntPipe) month: number,
     @Query('year', ParseIntPipe) year: number,
+    @Query('bankAccountId', OptionalParseUUIDPipe) bankAccountId?: string,
   ) {
+    console.log({ bankAccountId });
+
     return this.transactionsService.findAllByUserId(userId, { month, year });
   }
 
