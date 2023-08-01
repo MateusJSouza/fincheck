@@ -40,10 +40,8 @@ export class BankAccountsService {
       },
     });
 
-    return bankAccounts.map((bankAccount) => {
-      const currentBalance = 0;
-
-      const totalTransactions = bankAccount.transactions.reduce(
+    return bankAccounts.map(({ transactions, ...bankAccount }) => {
+      const totalTransactions = transactions.reduce(
         (acc, transaction) =>
           acc +
           (transaction.type === 'INCOME'
@@ -52,7 +50,12 @@ export class BankAccountsService {
         0,
       );
 
-      return { ...bankAccounts, currentBalance, totalTransactions };
+      const currentBalance = bankAccount.initialBalance + totalTransactions;
+
+      return {
+        ...bankAccounts,
+        currentBalance,
+      };
     });
   }
 
