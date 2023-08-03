@@ -21,6 +21,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useQuery({
     queryKey: ['users', 'me'],
     queryFn: async () => usersService.me(),
+    enabled: signedIn,
   })
 
   const signin = useCallback((accessToken: string) => {
