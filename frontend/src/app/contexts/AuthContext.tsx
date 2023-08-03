@@ -1,7 +1,11 @@
-import { ReactNode, createContext, useCallback, useState } from 'react';
-import { localStorageKeys } from '../config/localStorageKeys';
+import { ReactNode, createContext, useCallback, useEffect, useState } from 'react';
+
 import { useQuery } from '@tanstack/react-query';
+
+import { localStorageKeys } from '../config/localStorageKeys';
 import { usersService } from '../../services/usersService';
+
+import { toast } from 'react-hot-toast';
 
 interface AuthContextValue {
   signedIn: boolean;
@@ -18,7 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return !!storedAccessToken;
   });
 
-  useQuery({
+  const { isError } = useQuery({
     queryKey: ['users', 'me'],
     queryFn: async () => usersService.me(),
     enabled: signedIn,
@@ -34,6 +38,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem(localStorageKeys.ACCESS_TOKEN);
     setSignedIn(false);
   }, []);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('Sua sessão expirou!')
+      signout();
+    }
+  }, [isError, signout])
 
   return (
     <AuthContext.Provider value={{ signedIn, signin, signout }}>
