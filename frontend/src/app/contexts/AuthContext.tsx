@@ -6,7 +6,7 @@ import { localStorageKeys } from '../config/localStorageKeys';
 import { usersService } from '../../services/usersService';
 
 import { toast } from 'react-hot-toast';
-import { PageLoader } from '../../view/components/PageLoader';
+import { LaunchScreen } from '../../view/components/LaunchScreen';
 
 interface AuthContextValue {
   signedIn: boolean;
@@ -50,13 +50,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [isError, signout]);
 
-  if (isFetching) {
-    return <PageLoader />;
-  }
-
   return (
-    <AuthContext.Provider value={{ signedIn: isSuccess && signedIn, signin, signout }}>
-      {children}
+    <AuthContext.Provider
+      value={{
+        signedIn: isSuccess && signedIn,
+        signin,
+        signout
+      }}
+    >
+      <LaunchScreen isLoading={isFetching} />
+
+      {!isFetching && children}
     </AuthContext.Provider>
   )
 }
