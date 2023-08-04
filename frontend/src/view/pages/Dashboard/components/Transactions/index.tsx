@@ -18,17 +18,20 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import emptyStateImage from '../../../../../assets/empty-state.svg'
 
 export function Transactions() {
-  const { areValuesVisible, isLoading, transactions } = useTransactionsController()
+  const { areValuesVisible, isInitialLoading, isLoading, transactions } = useTransactionsController()
+
+  const hasTransactions = transactions.length > 0;
 
   return (
     <div className="bg-gray-100 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col">
-      {isLoading && (
+      {isInitialLoading && (
         <div className="flex items-center justify-center w-full h-full">
           <Spinner className="w-10 h-10" />
         </div>
       )}
 
-      {!isLoading && (
+      {/* Primeiro carregamento */}
+      {!isInitialLoading && (
         <>
           <header>
             <div className="flex justify-between items-center">
@@ -67,7 +70,13 @@ export function Transactions() {
           </header>
 
           <main className="mt-4 space-y-2 flex-1 overflow-y-auto">
-            {transactions.length === 0 && (
+            {isLoading && (
+              <div className="flex flex-col items-center justify-center h-full">
+                <Spinner className="w-10 h-10" />
+              </div>
+            )}
+
+            {(!hasTransactions && !isLoading) && (
               <div className="h-full w-full flex flex-col items-center justify-center">
                 <img src={emptyStateImage} alt="Ilustração em preto e branco de uma moça com uma lupa procurando algo em sua bolsa" />
                 <p className="text-gray-700">
@@ -76,7 +85,7 @@ export function Transactions() {
               </div>
             )}
 
-            {transactions.length > 0 && (
+            {(hasTransactions && !isLoading) && (
               <>
                 <div className="p-4 rounded-2xl bg-white flex items-center justify-between gap-4">
                   <div className="flex-1 flex items-center gap-3">
