@@ -18,5 +18,6 @@ export function useAccountsController() {
     areValuesVisible,
     toggleValueVisibility,
     isLoading: false,
+    accounts: []
   }
 }
