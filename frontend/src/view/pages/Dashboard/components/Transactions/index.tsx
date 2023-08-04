@@ -1,21 +1,24 @@
 import { SliderOption } from "./SliderOption";
+import { SliderNavigation } from "./SliderNavigation";
+import { Spinner } from "../../../../components/Spinner";
 import { FilterIcon } from "../../../../components/icons/FilterIcon";
 import { TransactionsIcon } from "../../../../components/icons/TransactionsIcon";
+import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
 
+import { cn } from "../../../../../app/utils/cn";
 import { MONTHS } from "../../../../../app/config/constants";
+import { formatCurrency } from "../../../../../app/utils/formatCurrency";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { ChevronDownIcon } from "@radix-ui/react-icons";
-import { SliderNavigation } from "./SliderNavigation";
-import { formatCurrency } from "../../../../../app/utils/formatCurrency";
-import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
-import { cn } from "../../../../../app/utils/cn";
 import { useTransactionsController } from "./useTransactionsController";
-import { Spinner } from "../../../../components/Spinner";
+
+import { ChevronDownIcon } from "@radix-ui/react-icons";
+
+import emptyStateImage from '../../../../../assets/empty-state.svg'
 
 export function Transactions() {
-  const { areValuesVisible, isLoading } = useTransactionsController()
+  const { areValuesVisible, isLoading, transactions } = useTransactionsController()
 
   return (
     <div className="bg-gray-100 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col">
@@ -64,45 +67,58 @@ export function Transactions() {
           </header>
 
           <main className="mt-4 space-y-2 flex-1 overflow-y-auto">
-            <div className="p-4 rounded-2xl bg-white flex items-center justify-between gap-4">
-              <div className="flex-1 flex items-center gap-3">
-                <CategoryIcon type="expense" />
-
-                <div>
-                  <strong className="tracking-[-0.5px] block">Almoço</strong>
-                  <span className="text-sm text-gray-600">04/06/2023</span>
-                </div>
+            {transactions.length === 0 && (
+              <div className="h-full w-full flex flex-col items-center justify-center">
+                <img src={emptyStateImage} alt="Ilustração em preto e branco de uma moça com uma lupa procurando algo em sua bolsa" />
+                <p className="text-gray-700">
+                  Não encontramos nenhuma transação!
+                </p>
               </div>
+            )}
 
-              <span
-                className={cn(
-                  'text-red-800 font-medium tracking-[-0.5px]',
-                  !areValuesVisible && 'blur-sm'
-                )}
-              >
-                - {formatCurrency(123)}
-              </span>
-            </div>
+            {transactions.length > 0 && (
+              <>
+                <div className="p-4 rounded-2xl bg-white flex items-center justify-between gap-4">
+                  <div className="flex-1 flex items-center gap-3">
+                    <CategoryIcon type="expense" />
 
-            <div className="p-4 rounded-2xl bg-white flex items-center justify-between gap-4">
-              <div className="flex-1 flex items-center gap-3">
-                <CategoryIcon type="income" />
+                    <div>
+                      <strong className="tracking-[-0.5px] block">Almoço</strong>
+                      <span className="text-sm text-gray-600">04/06/2023</span>
+                    </div>
+                  </div>
 
-                <div>
-                  <strong className="tracking-[-0.5px] block">Salário</strong>
-                  <span className="text-sm text-gray-600">10/06/2023</span>
+                  <span
+                    className={cn(
+                      'text-red-800 font-medium tracking-[-0.5px]',
+                      !areValuesVisible && 'blur-sm'
+                    )}
+                  >
+                    - {formatCurrency(123)}
+                  </span>
                 </div>
-              </div>
 
-              <span
-                className={cn(
-                  'text-red-800 font-medium tracking-[-0.5px]',
-                  !areValuesVisible && 'blur-sm'
-                )}
-              >
-                - {formatCurrency(3000)}
-              </span>
-            </div>
+                <div className="p-4 rounded-2xl bg-white flex items-center justify-between gap-4">
+                  <div className="flex-1 flex items-center gap-3">
+                    <CategoryIcon type="income" />
+
+                    <div>
+                      <strong className="tracking-[-0.5px] block">Salário</strong>
+                      <span className="text-sm text-gray-600">10/06/2023</span>
+                    </div>
+                  </div>
+
+                  <span
+                    className={cn(
+                      'text-red-800 font-medium tracking-[-0.5px]',
+                      !areValuesVisible && 'blur-sm'
+                    )}
+                  >
+                    - {formatCurrency(3000)}
+                  </span>
+                </div>
+              </>
+            )}
           </main>
         </>
       )}
