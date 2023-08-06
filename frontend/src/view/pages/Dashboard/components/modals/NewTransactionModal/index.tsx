@@ -3,6 +3,7 @@ import { Modal } from "../../../../../components/Modal";
 import { Button } from "../../../../../components/Button";
 import { Select } from "../../../../../components/Select";
 import { InputCurrency } from "../../../../../components/InputCurrency";
+import { DatePickerInput } from "../../../../../components/DatePickerInput";
 
 import { useNewTransactionModalController } from "./useNewTransactionModalController";
 
@@ -52,6 +53,8 @@ export function NewTransactionModal() {
               { value: 'CASH', label: 'Dinheiro Físico' },
             ]}
           />
+
+          <DatePickerInput />
         </div>
 
         <Button type="submit" className="w-full mt-6">Criar</Button>
