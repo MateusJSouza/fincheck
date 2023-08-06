@@ -1,14 +1,14 @@
 import { CrossCircledIcon } from "@radix-ui/react-icons";
 
 interface FieldErrorsProps {
-  error?: string;
+  errorMessage?: string;
 }
 
-export function FieldError({ error }: FieldErrorsProps) {
+export function FieldError({ errorMessage }: FieldErrorsProps) {
   return (
     <div className="flex gap-2 items-center mt-2 text-red-900">
       <CrossCircledIcon />
-      <span className="text-xs">{error}</span>
+      <span className="text-xs">{errorMessage}</span>
     </div>
   )
 }
