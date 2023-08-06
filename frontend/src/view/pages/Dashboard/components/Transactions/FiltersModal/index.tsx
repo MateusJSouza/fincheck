@@ -1,13 +1,23 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
-import { Modal } from "../../../../components/Modal";
-import { Button } from "../../../../components/Button";
+import { Modal } from "../../../../../components/Modal";
+import { Button } from "../../../../../components/Button";
+import { useFiltersModal } from "./useFiltersModal";
+import { cn } from "../../../../../../app/utils/cn";
 
 interface FiltersModalProps {
   open: boolean;
   onClose(): void;
 }
 
+const mockedAccounts = [
+  { id: '123', name: 'Nubank' },
+  { id: '456', name: 'XP Investimentos' },
+  { id: '789', name: 'Dinheiro' },
+]
+
 export function FiltersModal({ open, onClose }: FiltersModalProps) {
+  const { handleSelectedBankAccount, selectedBankAccountId } = useFiltersModal()
+
   return (
     <Modal open={open} onClose={onClose} title="Filtros">
       <div className="space-y-1">
@@ -17,17 +27,18 @@ export function FiltersModal({ open, onClose }: FiltersModalProps) {
       </div>
 
       <div className="space-y-2 mt-2">
-        <button className="p-2 rounded-2xl w-full !bg-gray-200 hover:bg-gray-50 transition-colors text-left text-gray-800">
-          Nubank
-        </button>
-
-        <button className="p-2 rounded-2xl w-full text-left hover:bg-gray-50 transition-colors text-gray-800">
-          XP Investimentos
-        </button>
-
-        <button className="p-2 rounded-2xl w-full text-left hover:bg-gray-50 transition-colors text-gray-800">
-          Dinheiro
-        </button>
+        {mockedAccounts.map(account => (
+          <button
+            key={account.id}
+            onClick={() => handleSelectedBankAccount(account.id)}
+            className={cn(
+              'p-2 rounded-2xl w-full hover:bg-gray-50 transition-colors text-left text-gray-800',
+              account.id === selectedBankAccountId && '!bg-gray-200',
+            )}
+          >
+            {account.name}
+          </button>
+        ))}
       </div>
 
       <div className="mt-10 text-gray-800">
