@@ -16,6 +16,7 @@ export function Accounts() {
     setSliderState,
     windowWidth,
     areValuesVisible,
+    openNewAccountModal,
     toggleValueVisibility,
     isLoading,
     accounts
@@ -61,7 +62,10 @@ export function Accounts() {
                   </strong>
                 </div>
 
-                <button className="mt-4 h-52 border-2 border-teal-600 rounded-2xl border-dashed flex flex-col items-center justify-center gap-4 text-white hover:bg-teal-950/5 transition-colors">
+                <button
+                  className="mt-4 h-52 border-2 border-teal-600 rounded-2xl border-dashed flex flex-col items-center justify-center gap-4 text-white hover:bg-teal-950/5 transition-colors"
+                  onClick={openNewAccountModal}
+                >
                   <div className="w-11 h-11 rounded-full border-2 border-dashed border-white flex items-center justify-center">
                     <PlusIcon className="w-6 h-6" />
                   </div>
