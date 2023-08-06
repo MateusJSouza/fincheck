@@ -8,6 +8,5 @@ export function BankAccountIcon() {
       <path d="M24.1377 20.3912V27.9745M28.4713 20.3912V27.9745M15.469 20.3912V27.9745M19.8025 20.3912V27.9745" stroke="#1864AB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <rect x="1" y="1" width="42" height="42" rx="21" stroke="white" strokeWidth="2" />
     </svg>
-
   )
 }
