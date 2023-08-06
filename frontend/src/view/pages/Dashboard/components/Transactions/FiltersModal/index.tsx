@@ -16,7 +16,12 @@ const mockedAccounts = [
 ]
 
 export function FiltersModal({ open, onClose }: FiltersModalProps) {
-  const { handleSelectedBankAccount, selectedBankAccountId } = useFiltersModal()
+  const {
+    handleSelectedBankAccount,
+    selectedBankAccountId,
+    selectedYear,
+    handleChangeYear
+  } = useFiltersModal()
 
   return (
     <Modal open={open} onClose={onClose} title="Filtros">
@@ -48,15 +53,23 @@ export function FiltersModal({ open, onClose }: FiltersModalProps) {
       </div>
 
       <div className="mt-2 w-52 flex items-center justify-between">
-        <button className="w-12 h-12 flex items-center justify-center">
+        <button
+          className="w-12 h-12 flex items-center justify-center"
+          onClick={() => handleChangeYear(-1)}
+        >
           <ChevronLeftIcon className="w-6 h-6" />
         </button>
 
-        <div className=" text-center flex-1">
-          <span className="text-sm font-medium tracking-[-0.5px]">2023</span>
+        <div className="text-center flex-1">
+          <span className="text-sm font-medium tracking-[-0.5px]">
+            {selectedYear}
+          </span>
         </div>
 
-        <button className="w-12 h-12 flex items-center justify-center">
+        <button
+          className="w-12 h-12 flex items-center justify-center"
+          onClick={() => handleChangeYear(1)}
+        >
           <ChevronRightIcon className="w-6 h-6" />
         </button>
       </div>
