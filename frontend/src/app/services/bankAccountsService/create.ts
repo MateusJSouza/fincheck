@@ -7,11 +7,7 @@ export interface BankAccountParams {
 	type: 'CHECKING' | 'INVESTMENT' | 'CASH'
 }
 
-interface BankAccountResponse {
-  accessToken: string;
-}
-
-export async function create(params: BankAccountResponse) {
+export async function create(params: BankAccountParams) {
   const { data } = await httpClient.post('/bank-accounts', params);
 
   return data;
