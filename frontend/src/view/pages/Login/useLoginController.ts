@@ -6,8 +6,8 @@ import { useMutation } from '@tanstack/react-query';
 
 import toast from 'react-hot-toast';
 
-import { authService } from '../../../services/authService';
-import { SigninParams } from '../../../services/authService/signin';
+import { authService } from '../../../app/services/authService';
+import { SigninParams } from '../../../app/services/authService/signin';
 import { useAuth } from '../../../app/hooks/useAuth';
 
 const schema = z.object({

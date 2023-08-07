@@ -3,7 +3,7 @@ import { ReactNode, createContext, useCallback, useEffect, useState } from 'reac
 import { useQuery } from '@tanstack/react-query';
 
 import { localStorageKeys } from '../config/localStorageKeys';
-import { usersService } from '../../services/usersService';
+import { usersService } from '../services/usersService';
 
 import { toast } from 'react-hot-toast';
 import { LaunchScreen } from '../../view/components/LaunchScreen';
