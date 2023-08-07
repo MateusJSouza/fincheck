@@ -40,14 +40,23 @@ export function NewAccountModal() {
             {...register('name')}
           />
 
-          <Select
-            placeholder="Tipo"
-            error={errors.type?.message}
-            options={[
-              { value: 'CHECKING', label: 'Conta Corrente' },
-              { value: 'INVESTMENT', label: 'Investimentos' },
-              { value: 'CASH', label: 'Dinheiro Físico' },
-            ]}
+          <Controller
+            control={control}
+            name="type"
+            defaultValue="CASH"
+            render={({ field: { onChange, value } }) => (
+              <Select
+                placeholder="Tipo"
+                error={errors.type?.message}
+                onChange={onChange}
+                value={value}
+                options={[
+                  { value: 'CHECKING', label: 'Conta Corrente' },
+                  { value: 'INVESTMENT', label: 'Investimentos' },
+                  { value: 'CASH', label: 'Dinheiro Físico' },
+                ]}
+              />
+            )}
           />
 
           <ColorsDropdownInput error={errors.color?.message} />
