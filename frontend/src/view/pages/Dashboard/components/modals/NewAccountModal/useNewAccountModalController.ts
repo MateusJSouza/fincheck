@@ -4,6 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useDashboard } from '../../DashboardContext/useDashboard'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
+import { bankAccountsService } from '../../../../../../app/services/bankAccountsService'
+import { currencyStringToNumber } from '../../../../../../app/utils/currencyStringToNumber'
 
 const schema = z.object({
   initialBalance: z.string().nonempty('Saldo inicial é obrigatório'),
@@ -21,20 +23,26 @@ export function useNewAccountModalController() {
     register,
     handleSubmit: hookFormSubmit,
     formState: { errors },
-    control
+    control,
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   })
 
-  const { mutateAsync, isLoading } = useMutation({
-
-  });
+  const { mutateAsync, isLoading } = useMutation(bankAccountsService.create);
 
   const handleSubmit = hookFormSubmit(async (data) => {
     try {
-      console.log(data)
+      await mutateAsync({
+        ...data,
+        initialBalance: currencyStringToNumber(data.initialBalance)
+      })
+
+      toast.success('Conta cadastrada com sucesso!');
+      closeNewAccountModal()
+      reset()
     } catch {
-      toast.error('')
+      toast.error('Erro ao cadastrar a conta!')
     }
   })
 
@@ -44,6 +52,7 @@ export function useNewAccountModalController() {
     register,
     errors,
     handleSubmit,
-    control
+    control,
+    isLoading
   }
 }
