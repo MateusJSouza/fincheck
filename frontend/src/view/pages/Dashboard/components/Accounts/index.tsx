@@ -1,13 +1,15 @@
-import { EyeIcon } from "../../../../components/icons/EyeIcon";
 import { AccountCard } from "./AccountCard";
+import { SliderNavigation } from "./SliderNavigation";
+import { Spinner } from "../../../../components/Spinner";
+import { EyeIcon } from "../../../../components/icons/EyeIcon";
+import { useAccountsController } from "./useAccountsController";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { SliderNavigation } from "./SliderNavigation";
-import { useAccountsController } from "./useAccountsController";
-import { formatCurrency } from "../../../../../app/utils/formatCurrency";
+
 import { cn } from "../../../../../app/utils/cn";
-import { Spinner } from "../../../../components/Spinner";
+import { formatCurrency } from "../../../../../app/utils/formatCurrency";
+
 import { PlusIcon } from "@radix-ui/react-icons";
 
 export function Accounts() {
@@ -19,7 +21,8 @@ export function Accounts() {
     openNewAccountModal,
     toggleValueVisibility,
     isLoading,
-    accounts
+    accounts,
+    currentBalance
   } = useAccountsController()
 
   return (
@@ -41,7 +44,7 @@ export function Accounts() {
                 'text-2xl tracking-[-1px] text-white',
                 !areValuesVisible && 'blur-md'
               )}>
-                {formatCurrency(1000)}
+                {formatCurrency(currentBalance)}
               </strong>
 
               <button
@@ -78,7 +81,7 @@ export function Accounts() {
               <div>
                 <Swiper
                   spaceBetween={16}
-                  slidesPerView={windowWidth >= 500 ? 2.1 : 1.2}
+                  slidesPerView={windowWidth >= 500 ? 2.1 : 1.1}
                   onSlideChange={swiper => {
                     setSliderState({
                       isBeginning: swiper.isBeginning,
@@ -98,39 +101,24 @@ export function Accounts() {
                   </div>
 
                   {/* Cards */}
-                  <SwiperSlide>
-                    <AccountCard
-                      type="CASH"
-                      name="Nubank"
-                      color="#7950f2"
-                      balance={1000}
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      type="INVESTMENT"
-                      name="XP Investimentos"
-                      color="#333"
-                      balance={1000}
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      type="CHECKING"
-                      name="Carteira"
-                      color="#0f0"
-                      balance={1000}
-                    />
-                  </SwiperSlide>
+                  {accounts.map(account => (
+                    <SwiperSlide
+                      key={account.id}
+                    >
+                      <AccountCard
+                        color={account.color}
+                        name={account.name}
+                        balance={account.currentBalance}
+                        type={account.type}
+                      />
+                    </SwiperSlide>
+                  ))}
                 </Swiper>
               </div>
             )}
           </div>
         </>
       )}
-
     </div >
   )
 }
