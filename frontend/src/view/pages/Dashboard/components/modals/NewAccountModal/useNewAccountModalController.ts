@@ -21,7 +21,7 @@ export function useNewAccountModalController() {
     formState: { errors },
     control
   } = useForm<FormData>({
-    resolver: zodResolver(schema)
+    resolver: zodResolver(schema),
   })
 
   const handleSubmit = hookFormSubmit(async (data) => {

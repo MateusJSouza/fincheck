@@ -3,18 +3,19 @@ import { FieldError } from "./FieldError"
 
 interface InputCurrencyProps {
   error?: string;
-  onChange(value: string): void;
+  value?: string;
+  onChange?(value: string): void;
 }
 
-export function InputCurrency({ error, onChange }: InputCurrencyProps) {
+export function InputCurrency({ error, onChange, value }: InputCurrencyProps) {
   return (
     <div>
       <NumericFormat
         thousandSeparator="."
         decimalSeparator=","
-        onChange={event => onChange(event.target.value)}
+        value={value}
+        onChange={event => onChange?.(event.target.value)}
         className="w-full text-[32px] font-bold text-gray-800 tracking-[-1px] outline-none"
-        defaultValue="0"
       />
 
       {error && (

@@ -19,13 +19,15 @@ export function NewAccountModal() {
             <span className="text-gray-600 text-lg tracking-[-0.5px]">R$</span>
             <Controller
               control={control}
-              render={({ field: { onChange } }) => (
+              name="initialBalance"
+              defaultValue="0"
+              render={({ field: { onChange, value } }) => (
                 <InputCurrency
+                  value={value}
                   error={errors.initialBalance?.message}
                   onChange={onChange}
                 />
               )}
-              name="initialBalance"
             />
           </div>
         </div>
