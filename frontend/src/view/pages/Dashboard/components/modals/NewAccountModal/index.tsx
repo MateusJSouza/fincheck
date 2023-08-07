@@ -8,7 +8,15 @@ import { Button } from "../../../../../components/Button";
 import { Controller } from "react-hook-form";
 
 export function NewAccountModal() {
-  const { isNewAccountModalOpen, closeNewAccountModal, errors, handleSubmit, register, control } = useNewAccountModalController()
+  const {
+    isNewAccountModalOpen,
+    closeNewAccountModal,
+    errors,
+    handleSubmit,
+    register,
+    control,
+    isLoading
+  } = useNewAccountModalController()
 
   return (
     <Modal title="Nova Conta" open={isNewAccountModalOpen} onClose={closeNewAccountModal}>
@@ -73,7 +81,13 @@ export function NewAccountModal() {
           />
         </div>
 
-        <Button type="submit" className="w-full mt-6">Criar</Button>
+        <Button
+          type="submit"
+          className="w-full mt-6"
+          isLoading={isLoading}
+        >
+          Criar
+        </Button>
       </form>
     </Modal>
   )
