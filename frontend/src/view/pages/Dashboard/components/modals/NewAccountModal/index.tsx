@@ -59,7 +59,18 @@ export function NewAccountModal() {
             )}
           />
 
-          <ColorsDropdownInput error={errors.color?.message} />
+          <Controller
+            control={control}
+            name="color"
+            defaultValue=""
+            render={({ field: { onChange, value } }) => (
+              <ColorsDropdownInput
+                error={errors.color?.message}
+                onChange={onChange}
+                value={value}
+              />
+            )}
+          />
         </div>
 
         <Button type="submit" className="w-full mt-6">Criar</Button>
