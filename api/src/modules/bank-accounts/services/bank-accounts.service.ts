@@ -51,7 +51,7 @@ export class BankAccountsService {
       const currentBalance = bankAccount.initialBalance + totalTransactions;
 
       return {
-        ...bankAccounts,
+        ...bankAccount,
         currentBalance,
         transactions,
       };
