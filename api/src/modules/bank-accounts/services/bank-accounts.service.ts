@@ -29,12 +29,10 @@ export class BankAccountsService {
     const bankAccounts = await this.bankAccountsRepo.findMany({
       where: { userId },
       include: {
-        user: true,
         transactions: {
           select: {
             type: true,
             value: true,
-            id: true,
           },
         },
       },
@@ -55,6 +53,7 @@ export class BankAccountsService {
       return {
         ...bankAccounts,
         currentBalance,
+        transactions,
       };
     });
   }
