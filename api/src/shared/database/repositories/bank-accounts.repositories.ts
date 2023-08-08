@@ -7,6 +7,10 @@ import { PrismaService } from '../prisma.service';
 export class BankAccountsRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
+  create(createDto: Prisma.BankAccountCreateArgs) {
+    return this.prismaService.bankAccount.create(createDto);
+  }
+
   findMany<T extends Prisma.BankAccountFindManyArgs>(
     findManyDto: Prisma.SelectSubset<T, Prisma.BankAccountFindManyArgs>,
   ) {
@@ -15,10 +19,6 @@ export class BankAccountsRepository {
 
   findFirst(findFirstDto: Prisma.BankAccountFindFirstArgs) {
     return this.prismaService.bankAccount.findFirst(findFirstDto);
-  }
-
-  create(createDto: Prisma.BankAccountCreateArgs) {
-    return this.prismaService.bankAccount.create(createDto);
   }
 
   update(updateDto: Prisma.BankAccountUpdateArgs) {
