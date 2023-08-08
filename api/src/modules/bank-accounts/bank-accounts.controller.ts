@@ -21,8 +21,8 @@ export class BankAccountsController {
 
   @Post()
   create(
-    @Body() createBankAccountDto: CreateBankAccountDto,
     @ActiveUserId() userId: string,
+    @Body() createBankAccountDto: CreateBankAccountDto,
   ) {
     return this.bankAccountsService.create(userId, createBankAccountDto);
   }
