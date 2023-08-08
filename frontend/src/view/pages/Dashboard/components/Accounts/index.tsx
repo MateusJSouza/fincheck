@@ -25,6 +25,8 @@ export function Accounts() {
     currentBalance
   } = useAccountsController()
 
+  console.log({ accounts })
+
   return (
     <div className="bg-teal-900 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col">
       {isLoading && (
@@ -38,8 +40,8 @@ export function Accounts() {
           {/* Saldo */}
           <div>
             <span className="tracking-[-0.5px] text-white block">Saldo atual</span>
-            <div className="flex items-center gap-2">
 
+            <div className="flex items-center gap-2">
               <strong className={cn(
                 'text-2xl tracking-[-1px] text-white',
                 !areValuesVisible && 'blur-md'
@@ -106,10 +108,7 @@ export function Accounts() {
                       key={account.id}
                     >
                       <AccountCard
-                        color={account.color}
-                        name={account.name}
-                        balance={account.currentBalance}
-                        type={account.type}
+                        data={account}
                       />
                     </SwiperSlide>
                   ))}
@@ -119,6 +118,6 @@ export function Accounts() {
           </div>
         </>
       )}
-    </div >
+    </div>
   )
 }
