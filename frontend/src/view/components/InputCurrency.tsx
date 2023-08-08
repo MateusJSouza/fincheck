@@ -3,7 +3,7 @@ import { FieldError } from "./FieldError"
 
 interface InputCurrencyProps {
   error?: string;
-  value?: string;
+  value?: string | number;
   onChange?(value: string): void;
 }
 
