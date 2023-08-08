@@ -4,6 +4,7 @@ import { Accounts } from "./components/Accounts";
 import { DashboardProvider } from "./components/DashboardContext";
 import { Fab } from "./components/Fab";
 import { Transactions } from "./components/Transactions";
+import { EditAccountModal } from "./components/modals/EditAccountModal";
 import { NewAccountModal } from "./components/modals/NewAccountModal";
 import { NewTransactionModal } from "./components/modals/NewTransactionModal";
 
@@ -29,6 +30,7 @@ export function Dashboard() {
         <Fab />
         <NewAccountModal />
         <NewTransactionModal />
+        <EditAccountModal />
       </div>
     </DashboardProvider>
   )
