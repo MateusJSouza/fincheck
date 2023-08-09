@@ -25,8 +25,6 @@ export function Accounts() {
     currentBalance
   } = useAccountsController()
 
-  console.log({ accounts })
-
   return (
     <div className="bg-teal-900 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col">
       {isLoading && (
@@ -102,14 +100,9 @@ export function Accounts() {
                     />
                   </div>
 
-                  {/* Cards */}
                   {accounts.map(account => (
-                    <SwiperSlide
-                      key={account.id}
-                    >
-                      <AccountCard
-                        data={account}
-                      />
+                    <SwiperSlide key={account.id}>
+                      <AccountCard data={account} />
                     </SwiperSlide>
                   ))}
                 </Swiper>
