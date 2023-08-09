@@ -21,7 +21,11 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export function useEditAccountModal() {
-  const { isEditAccountModalOpen, closeEditAccountModal, accountBeingEdited } = useDashboard()
+  const {
+    isEditAccountModalOpen,
+    closeEditAccountModal,
+     accountBeingEdited
+  } = useDashboard()
 
   const {
     register,
@@ -38,14 +42,21 @@ export function useEditAccountModal() {
     }
   })
 
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(true)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   const queryClient = useQueryClient();
-  const { mutateAsync, isLoading } = useMutation(bankAccountsService.update);
+  const {
+    mutateAsync: updateAccount,
+    isLoading
+  } = useMutation(bankAccountsService.update);
+  const {
+    mutateAsync: removeAccount,
+    isLoading: isLoadingDelete
+  } = useMutation(bankAccountsService.remove);
 
   const handleSubmit = hookFormSubmit(async (data) => {
     try {
-      await mutateAsync({
+      await updateAccount({
         ...data,
         initialBalance: currencyStringToNumber(data.initialBalance),
         id: accountBeingEdited!.id // Non-null assertion
@@ -69,6 +80,20 @@ export function useEditAccountModal() {
     setIsDeleteModalOpen(false)
   }
 
+  async function handleDeleteAccount() {
+    try {
+      await removeAccount(accountBeingEdited!.id)
+
+      queryClient.invalidateQueries({
+        queryKey: ['bankAccounts']
+      });
+      toast.success('A conta foi deletada com sucesso!');
+      closeEditAccountModal();
+    } catch {
+      toast.error('Erro ao deletar a conta!')
+    }
+  }
+
   return {
     isEditAccountModalOpen,
     closeEditAccountModal,
@@ -80,5 +105,7 @@ export function useEditAccountModal() {
     handleOpenDeleteModal,
     handleCloseDeleteModal,
     isDeleteModalOpen,
+    handleDeleteAccount,
+    isLoadingDelete
   }
 }
