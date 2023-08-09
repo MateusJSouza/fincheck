@@ -18,7 +18,8 @@ export function NewTransactionModal() {
     register,
     handleSubmit,
     accounts,
-    categories
+    categories,
+    isLoading
   } = useNewTransactionModalController()
 
   const isExpense = newTransactionType === 'EXPENSE';
@@ -98,13 +99,14 @@ export function NewTransactionModal() {
           <Controller
             control={control}
             name="date"
+            defaultValue={new Date()}
             render={({ field: { value, onChange } }) => (
-              <DatePickerInput value={value} onChange={onChange} />
+              <DatePickerInput error={errors.date?.message} value={value} onChange={onChange} />
             )}
           />
         </div>
 
-        <Button type="submit" className="w-full mt-6">Criar</Button>
+        <Button isLoading={isLoading} type="submit" className="w-full mt-6">Criar</Button>
       </form>
     </Modal>
   )
