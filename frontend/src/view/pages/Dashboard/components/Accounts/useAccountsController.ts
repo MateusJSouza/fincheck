@@ -20,9 +20,8 @@ export function useAccountsController() {
   const { accounts, isFetching } = useBankAccounts()
 
   const currentBalance = useMemo(() => {
-    return accounts.reduce((total, account) => {
-      return total + account.currentBalance
-    }, 0)
+    return accounts.reduce((total, account) =>
+      total + account.currentBalance, 0)
   }, [accounts])
 
   return {
