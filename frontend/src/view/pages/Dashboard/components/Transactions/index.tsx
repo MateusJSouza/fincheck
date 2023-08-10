@@ -27,7 +27,8 @@ export function Transactions() {
     handleOpenFiltersModal,
     handleCloseFiltersModal,
     handleChangeFilters,
-    filters
+    filters,
+    handleApplyFilters
   } = useTransactionsController()
 
   const hasTransactions = transactions.length > 0;
@@ -47,6 +48,7 @@ export function Transactions() {
           <FiltersModal
             onClose={handleCloseFiltersModal}
             open={isFiltersModalOpen}
+            onApplyFilters={handleApplyFilters}
           />
           <header>
             <div className="flex justify-between items-center">
