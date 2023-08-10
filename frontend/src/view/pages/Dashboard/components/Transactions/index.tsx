@@ -62,6 +62,7 @@ export function Transactions() {
                 slidesPerView={3}
                 centeredSlides
                 onSlideChange={(swiper) => {
+                  if (swiper.realIndex === filters.month) return;
                   handleChangeMonth(swiper.realIndex)
                 }}
                 initialSlide={filters.month}
@@ -84,7 +85,7 @@ export function Transactions() {
             </div>
           </header>
 
-          <main className="mt-4 space-y-2 flex-1 overflow-y-auto">
+          <main className="mt-4 space-y-2 flex-1 overflow-y-auto scrollbar scrollbar-thumb-rounded-full scrollbar-track-gray-200 scrollbar-thumb-gray-400 scrollbar-w-2">
             {isLoading && (
               <div className="flex flex-col items-center justify-center h-full">
                 <Spinner className="w-10 h-10" />
