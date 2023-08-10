@@ -106,7 +106,13 @@ export function NewTransactionModal() {
           />
         </div>
 
-        <Button isLoading={isLoading} type="submit" className="w-full mt-6">Criar</Button>
+        <Button
+          type="submit"
+          className="w-full mt-6"
+          isLoading={isLoading}
+        >
+          Criar
+        </Button>
       </form>
     </Modal>
   )
