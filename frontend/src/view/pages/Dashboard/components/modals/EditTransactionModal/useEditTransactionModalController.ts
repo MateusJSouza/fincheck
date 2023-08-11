@@ -101,6 +101,9 @@ export function useEditTransactionModalController(
       queryClient.invalidateQueries({
         queryKey: ['transactions']
       });
+      queryClient.invalidateQueries({
+        queryKey: ['bankAccounts']
+      });
 
       toast.success(
         transaction!.type === 'EXPENSE'
