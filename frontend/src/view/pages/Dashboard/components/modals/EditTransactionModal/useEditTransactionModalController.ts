@@ -5,6 +5,10 @@ import { useBankAccounts } from "../../../../../../app/hooks/useBankAccounts";
 import { useCategories } from "../../../../../../app/hooks/useCategories";
 import { useMemo } from "react";
 import { Transaction } from "../../../../../../app/entities/Transaction";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { transactionsService } from "../../../../../../app/services/transactionsService";
+import toast from "react-hot-toast";
+import { currencyStringToNumber } from "../../../../../../app/utils/currencyStringToNumber";
 
 const schema = z.object({
   value: z.union([
@@ -20,7 +24,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export function useEditTransactionModalController(
-  transaction: Transaction | null
+  transaction: Transaction | null,
+  onClose: () => void
 ) {
   const {
     register,
@@ -40,9 +45,38 @@ export function useEditTransactionModalController(
 
   const { accounts } = useBankAccounts();
   const { categories: categoriesList } = useCategories();
+  const { isLoading, mutateAsync } = useMutation(transactionsService.update)
+  const queryClient = useQueryClient()
 
   const handleSubmit = hookFormSubmit(async data => {
-    console.log({ data })
+    try {
+      await mutateAsync({
+        ...data,
+        id: transaction!.id,
+        value: currencyStringToNumber(data.value),
+        type: transaction!.type,
+        date: data.date.toISOString(),
+      })
+
+      queryClient.invalidateQueries({
+        queryKey: ['transactions']
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['bankAccounts']
+      });
+      toast.success(
+        transaction!.type === 'EXPENSE'
+          ? 'Despesa editada com sucesso!'
+          : 'Receita editada com sucesso!'
+      );
+      onClose();
+    } catch {
+      toast.error(
+        transaction!.type === 'EXPENSE'
+          ? 'Erro ao salvar a despesa!'
+          : 'Erro ao salvar a receita!'
+      )
+    }
   })
 
   const categories = useMemo(() => {
@@ -56,7 +90,7 @@ export function useEditTransactionModalController(
     handleSubmit,
     accounts,
     categories,
-    isLoading: false,
     transaction,
+    isLoading
   }
 }
