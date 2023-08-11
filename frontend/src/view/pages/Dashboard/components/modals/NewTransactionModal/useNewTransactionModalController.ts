@@ -21,7 +21,11 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export function useNewTransactionModalController() {
-  const { isNewTransactionModalOpen, closeNewTransactionModal, newTransactionType, } = useDashboard()
+  const {
+    isNewTransactionModalOpen,
+    closeNewTransactionModal,
+    newTransactionType,
+  } = useDashboard()
 
   const {
     register,
@@ -36,6 +40,7 @@ export function useNewTransactionModalController() {
   const queryClient = useQueryClient()
   const { accounts } = useBankAccounts();
   const { categories: categoriesList } = useCategories();
+
   const { isLoading, mutateAsync } = useMutation(transactionsService.create)
 
   const handleSubmit = hookFormSubmit(async data => {
@@ -49,6 +54,9 @@ export function useNewTransactionModalController() {
 
       queryClient.invalidateQueries({
         queryKey: ['transactions']
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['bankAccounts']
       });
       toast.success(
         newTransactionType === 'EXPENSE'
