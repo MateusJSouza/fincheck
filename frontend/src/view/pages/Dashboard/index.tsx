@@ -17,7 +17,7 @@ export function Dashboard() {
             <header className="h-12 flex items-center justify-between">
               <Logo className="h-6 text-teal-900" />
 
-              <UserMenu userName="MA" />
+              <UserMenu />
             </header>
 
             <main className="flex-1 flex flex-col md:flex-row gap-4 max-h-full">
