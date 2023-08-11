@@ -7,14 +7,15 @@ import { DatePickerInput } from "../../../../../components/DatePickerInput";
 
 import { Controller } from "react-hook-form";
 import { useEditTransactionModalController } from "./useEditTransactionModalController";
+import { Transaction } from "../../../../../../app/entities/Transaction";
 
 interface EditTransactionModalProps {
-  transactionType: 'EXPENSE' | 'INCOME';
   open: boolean;
   onClose(): void;
+  transaction: Transaction | null;
 }
 
-export function EditTransactionModal({ transactionType, onClose, open }: EditTransactionModalProps) {
+export function EditTransactionModal({ transaction, onClose, open }: EditTransactionModalProps) {
   const {
     control,
     errors,
@@ -23,9 +24,9 @@ export function EditTransactionModal({ transactionType, onClose, open }: EditTra
     accounts,
     categories,
     isLoading
-  } = useEditTransactionModalController(transactionType)
+  } = useEditTransactionModalController(transaction)
 
-  const isExpense = transactionType === 'EXPENSE';
+  const isExpense = transaction?.type === 'EXPENSE';
 
   return (
     <Modal
