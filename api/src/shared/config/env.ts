@@ -13,12 +13,11 @@ class Env {
 
   @IsString()
   @IsNotEmpty()
-  @NotEquals('unsecure_jwt_secret')
   feDevURL: string;
 
   @IsString()
   @IsNotEmpty()
-  @NotEquals('unsecure_jwt_secret')
+  @NotEquals('unsecure_prod_url')
   feProdURL: string;
 }
 
@@ -32,5 +31,5 @@ export const env: Env = plainToInstance(Env, {
 const errors = validateSync(env);
 
 if (errors.length > 0) {
-  throw new Error(JSON.stringify(errors, null, 2));
+  throw new Error(JSON.stringify(errors, null, 4));
 }
