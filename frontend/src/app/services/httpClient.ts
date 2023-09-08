@@ -3,7 +3,10 @@ import { localStorageKeys } from '../config/localStorageKeys';
 import { sleep } from '../utils/sleep';
 
 export const httpClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL
+  baseURL: import.meta.env.VITE_API_URL,
+  headers: {
+    'Access-Control-Allow-Origin': 'https://fincheck-seven.vercel.app'
+  }
 })
 
 // Setando o token de acesso caso tenha no localStorage
